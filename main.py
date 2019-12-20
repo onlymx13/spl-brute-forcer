@@ -1,10 +1,17 @@
 import math
 
+use_you = bool(input("Use 'you'?"))
+if use_you:
+  you = int(input("Use which number for 'you'? "))
 def letter_to_spl(letter):
   if ord("a") <= ord(letter) and ord(letter) <= ord("h"):
     return "a " + "big " * (ord(letter) - ord("a")) + "cat"
   elif ord("i") <= ord(letter) and ord(letter) <= ord("p"):
     return "a " + "big " * (ord(letter) - ord("i")) + "pig"
+  elif i == "u":
+    return "you"
+  elif i == "0":
+    return "zero"
   else:
     return letter
 
@@ -13,11 +20,13 @@ def to_spl(code):
   code = list(map(letter_to_spl,list(code)))
   return code
 
-poss = list("0abcdefghijklmnopw+23O");
+poss = list("0abcdefghijklmnopw+*23O");
+if use_you:
+  poss.append("u")
 best = {}
 soln = {}
-for j in list(set(poss) - set(["+", "O", "w"])):
-  for k in list(set(poss) - set(["+"])):
+for j in list(set(poss) - set(["+", "*", "O", "w", "2", "3"])):
+  for k in list(set(poss) - set(["+", "*"])):
     for l in poss:
       for m in poss:
         for n in poss:
@@ -42,12 +51,18 @@ for j in list(set(poss) - set(["+", "O", "w"])):
                   elif i == "+":
                     stack.append(stack.pop() + stack.pop())
                     cost += 11
+                  elif i == "*":
+                    stack.append(stack.pop() * stack.pop())
+                    cost += 15
                   elif i == "2":
                     stack.append(stack.pop() ** 2)
                     cost += 13
                   elif i == "3":
                     stack.append(stack.pop() ** 3)
                     cost += 11
+                  elif i == "u"
+                    stack.append(you)
+                    cost += 3
               except Exception as err:
                 1
                 #print(err)
