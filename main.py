@@ -4,14 +4,24 @@ use_you = input("Use 'you' (y/N)? ").lower() == "y"
 if use_you:
   you = int(input("Use which number for 'you'? "))
 def letter_to_spl(letter):
-  if ord("a") <= ord(letter) and ord(letter) <= ord("h"):
+  if i == "0":
+    return "zero"
+  elif ord("a") <= ord(letter) and ord(letter) <= ord("h"):
     return "a " + "big " * (ord(letter) - ord("a")) + "cat"
   elif ord("i") <= ord(letter) and ord(letter) <= ord("p"):
     return "a " + "big " * (ord(letter) - ord("i")) + "pig"
+  elif i == "w":
+    return "twice "
+  elif i == "+":
+    return "the sum of"
+  elif i == "*":
+    return "the product of"
+  elif i == "2":
+    return "the square of"
+  elif i == "3":
+    return "the cube of"
   elif i == "u":
     return "you"
-  elif i == "0":
-    return "zero"
   else:
     return letter
 
