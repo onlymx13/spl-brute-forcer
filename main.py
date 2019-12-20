@@ -1,6 +1,6 @@
 import math
 
-use_you = bool(input("Use 'you'?"))
+use_you = input("Use 'you' (y/N)? ").lower() == "y"
 if use_you:
   you = int(input("Use which number for 'you'? "))
 def letter_to_spl(letter):
@@ -60,7 +60,7 @@ for j in list(set(poss) - set(["+", "*", "O", "w", "2", "3"])):
                   elif i == "3":
                     stack.append(stack.pop() ** 3)
                     cost += 11
-                  elif i == "u"
+                  elif i == "u":
                     stack.append(you)
                     cost += 3
               except Exception as err:
