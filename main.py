@@ -1,15 +1,40 @@
-import math
+import math, getopt, sys
 
-use_you = input("Use 'you' (y/N)? ").lower() == "y"
-if use_you:
-  you = int(input("Use which number for 'you'? "))
+args = sys.argv
+argList = args[1:]
+unixOptions = "hy:v"
+gnuOptions = ["help", "you=", "verbose"]
+try:
+  arguments, values = getopt.getopt(argList, unixOptions, gnuOptions)
+except getopt.error as err:
+  print(err)
+  sys.exit(2)
+
+use_you = False
+
+for currArg, currVal in arguments:
+  if currArg in ("-h", "--help"):
+      print("This is a program that brute forces different ways to write numbers in the Shakespeare Programming Language.\n")
+      print("usage: python3 main.py [--help] [--you YOU] [--verbose]\n")
+      print("optional arguments:")
+      print("  -h, --help: Print this help and exit.")
+      print("  -y YOU, --you YOU: Use a certain value as 'you'. If ommitted, no 'you' will be used. TODO: add 'I'.")
+      print("  -v, --verbose: not currently supported.")
+      exit()
+  elif currArg in ("-y", "--you"):
+    use_you = True
+    you = currVal
+    print("Using a value of %s as 'you'" % (currVal))
+  elif currArg in ("-v", "--verbose"):
+    print("Verbose mode not yet supported")
+
 def letter_to_spl(letter):
   if letter == "0":
     return "zero"
   elif ord("a") <= ord(letter) and ord(letter) <= ord("h"):
-    return "a " + "big " * (ord(letter) - ord("a")) + "cat"
+    return "a " + "big " * (ord(letter) - ord("a")) + "cat "
   elif ord("i") <= ord(letter) and ord(letter) <= ord("p"):
-    return "a " + "big " * (ord(letter) - ord("i")) + "pig"
+    return "a " + "big " * (ord(letter) - ord("i")) + "pig "
   elif letter == "w":
     return "twice "
   elif letter == "+":
@@ -21,14 +46,15 @@ def letter_to_spl(letter):
   elif letter == "3":
     return "the cube of"
   elif letter == "u":
-    return "you"
+    return "you "
   else:
     return letter
 
 def to_spl(code):
   code = code.replace("O", "")
   code = list(map(letter_to_spl,list(code)))
-  return code
+  code.reverse()
+  return "".join(code)
 
 poss = list("0abcdefghijklmnopw+*23O");
 if use_you:
@@ -41,7 +67,7 @@ for j in list(set(poss) - set(["+", "*", "O", "w", "2", "3"])):
       for m in poss:
         for n in poss:
           for o in poss:
-            for p in poss:
+            for p in list(set(poss) - set(list("0abcdefghijklmnop"))):
               stack = []
               cost = 0
               try:
